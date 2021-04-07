@@ -12,7 +12,7 @@ app.all('/', (req, res) => {
   res.status(200).send('Webhooker is running...')
 })
 
-app.get("/deploy", (req, res) => {
+app.post("/deploy", (req, res) => {
   console.log(req.body)
   res.status(200).end()
 })
