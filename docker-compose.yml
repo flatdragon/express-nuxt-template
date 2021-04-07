@@ -5,7 +5,7 @@ services:
   frontend:
     build:
       context: ./docker/services/frontend
-    restart: unless-stopped
+    # restart: unless-stopped
     environment:
       ENV: ${ENV:-test}
       HOST: ${FRONTEND_INTERNAL_HOST:-0.0.0.0}
