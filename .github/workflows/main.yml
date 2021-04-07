@@ -13,4 +13,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Up Frontend Container & Run Tests
-        run: docker-compose up --build --force-recreate frontend
+        run: docker-compose up --build --exit-code-from --force-recreate frontend
