@@ -1,0 +1,16 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Main Branch
+        uses: actions/checkout@v2
+
+      - name: Up Frontend Container & Run Tests
+        run: docker-compose up --build --force-recreate frontend
