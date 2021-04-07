@@ -7,7 +7,6 @@ on:
 
 env:
   ENV: pipeline
-  WORKDIR_NAME: ${PWD##*/}
 
 jobs:
   test:
