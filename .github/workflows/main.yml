@@ -28,10 +28,10 @@ jobs:
             frontend-node-modules-
 
       - name: Install Frontend Dependencies
-        run: docker-compose run frontend npm ci --cache .npm --prefer-offline && exit 0
+        run: docker-compose run frontend npm ci --prefer-offline && exit 0
 
-      - name:  Check Cache
-        run: docker-compose run frontend ls
+      - name: Check Cache
+        run: docker-compose run frontend cd .npm
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
