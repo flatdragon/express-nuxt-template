@@ -31,7 +31,7 @@ jobs:
         run: docker-compose run frontend npm ci --prefer-offline && exit 0
 
       - name: Check Cache
-        run: ls
+        run: docker exec express-nuxt-template_frontend_1 cd /.npm
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
