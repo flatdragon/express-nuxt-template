@@ -28,7 +28,7 @@ jobs:
             frontend-node-modules-
 
       - name:  Check If Cache Folder Exists
-        run: docker-compose run frontend bash && if [ -d ".npm" ]; then; echo "Yes, it exists"; fi
+        run: docker-compose run frontend bash && cd .npm && ls
 
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache .npm --prefer-offline && exit 0
