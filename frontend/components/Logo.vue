@@ -21,11 +21,6 @@
   </svg>
 </template>
 
-<script>
-import { defineComponent } from '@vue/composition-api'
-</script>
-
-
 <style>
 .NuxtLogo {
   animation: 1s appear;
