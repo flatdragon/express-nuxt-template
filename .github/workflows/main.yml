@@ -19,7 +19,7 @@ jobs:
         run: docker-compose build frontend
 
       - name: Up Frontend Container 
-        run: docker-compose up --detach --exit-code-from frontend
+        run: docker-compose up --detach frontend
 
       - name: Install Frontend Dependencies
         run: ./exec frontend_1 npm ci
