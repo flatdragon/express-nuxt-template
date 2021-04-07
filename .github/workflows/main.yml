@@ -7,6 +7,7 @@ on:
 
 env:
   ENV: pipeline
+  WORKDIR_NAME: ${PWD##*/}
 
 jobs:
   test:
@@ -18,14 +19,8 @@ jobs:
       - name: Build Frontend Container
         run: docker-compose build frontend
 
-      - name: Up Frontend Container 
-        run: docker-compose up --detach frontend
-
       - name: Install Frontend Dependencies
-        run: bash ./exec frontend_1 npm ci
+        run: docker-compose run frontend npm ci && exit 0
 
       - name: Run Frontend Tests
-        run: bash ./exec frontend_1 npm run test --if-present
-
-      - name: Up Frontend Container & Run Tests
-        run: docker-compose up --exit-code-from frontend
+        run: docker-compose run frontend npm run test --if-present && exit 0
