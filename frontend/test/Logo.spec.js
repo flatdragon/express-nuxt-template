@@ -8,7 +8,7 @@ describe('Logo', () => {
     expect(wrapper.vm).toBeTruthy()
   })
 
-  // test('is img tag', () => {
-  //   expect(wrapper.find('img')).toBe(true)
-  // })
+  test('is img tag', () => {
+    expect(wrapper.find('img')).toBe(true)
+  })
 })
