@@ -30,8 +30,13 @@ jobs:
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache .npm --prefer-offline && exit 0
 
-      - name:  List Frontend Folder
-        run: cd frontend && ls
+      - name:  Check If Cache Folder Exists
+        run: |
+          cd frontend
+
+          if [ -d ".npm" ]; then
+            echo "Yes, it exists"
+          fi
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
