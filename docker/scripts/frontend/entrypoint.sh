@@ -9,4 +9,4 @@ if [ "$ENV" = "pipeline" ]; then
   tail -f /dev/null
 fi
 
-/scripts/wrong-env.sh
+bash /scripts/wrong-env.sh
