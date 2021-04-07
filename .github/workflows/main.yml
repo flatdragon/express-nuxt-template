@@ -27,8 +27,8 @@ jobs:
           restore-keys: |
             frontend-node-modules-
 
-      - name:  List Frontend Before
-        run: docker-compose run frontend ls
+      - name:  Check Cache Out Of Container
+        run: cd frontend && ls
 
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache npm_cache --prefer-offline && exit 0
