@@ -2,8 +2,13 @@ import { mount } from '@vue/test-utils'
 import Logo from '@/components/Logo.vue'
 
 describe('Logo', () => {
+  const wrapper = mount(Logo)
+
   test('is a Vue instance', () => {
-    const wrapper = mount(Logo)
     expect(wrapper.vm).toBeTruthy()
+  })
+
+  test('is img tag', () => {
+    expect(wrapper.contains('img')).toBe(true)
   })
 })
