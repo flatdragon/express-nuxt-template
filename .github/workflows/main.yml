@@ -38,3 +38,9 @@ jobs:
 
       - name: Build Frontend
         run: docker-compose run frontend npm run build && exit 0
+
+      - name: Trigger Deploy Webhook
+        uses: distributhor/workflow-webhook@v1
+        env:
+          webhook_url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.DEPLOY_WEBHOOK_SECRET }}

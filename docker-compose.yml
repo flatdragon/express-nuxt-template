@@ -5,7 +5,6 @@ services:
   frontend:
     build:
       context: ./docker/services/frontend
-    # restart: unless-stopped
     environment:
       ENV: ${ENV}
       HOST: ${FRONTEND_INTERNAL_HOST:-0.0.0.0}
@@ -15,3 +14,17 @@ services:
     volumes:
       - ./frontend:/app
       - ./docker/scripts:/scripts
+
+  webhooker:
+    build:
+      context: ./docker/services/webhooker
+    ports:
+      - 4000:4000
+    volumes:
+      - ./webhooker:/app
+      - ./docker/scripts:/scripts
+
+  tunnel:
+    build:
+      context: ./docker/services/tunnel
+    command: lt --subdomain flatdragon-webhooker --local-host webhooker --port 4000
