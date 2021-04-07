@@ -22,10 +22,10 @@ jobs:
         run: docker-compose up --detach frontend
 
       - name: Install Frontend Dependencies
-        run: ./exec frontend_1 npm ci
+        run: bash ./exec frontend_1 npm ci
 
       - name: Run Frontend Tests
-        run: ./exec frontend_1 npm run test --if-present
+        run: bash ./exec frontend_1 npm run test --if-present
 
       - name: Up Frontend Container & Run Tests
         run: docker-compose up --exit-code-from frontend
