@@ -28,7 +28,7 @@ jobs:
             frontend-node-modules-
 
       - name:  Check Cache Out Of Container
-        run: cd frontend && ls
+        run: ls
 
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache npm_cache --prefer-offline && exit 0
