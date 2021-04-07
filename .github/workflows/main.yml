@@ -31,7 +31,7 @@ jobs:
         run: docker-compose run frontend npm ci --prefer-offline && exit 0
 
       - name: Check Cache
-        run: docker-compose run frontend bash cd assets/ && ls
+        run: docker-compose run frontend ls && cd ./assets
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
