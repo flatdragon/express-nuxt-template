@@ -28,7 +28,7 @@ jobs:
             frontend-node-modules-
 
       - name:  List Frontend Before
-        run: docker-compose run frontend cd npm_cache && ls
+        run: docker-compose run frontend ls
 
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache npm_cache --prefer-offline && exit 0
