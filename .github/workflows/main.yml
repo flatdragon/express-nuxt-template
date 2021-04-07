@@ -22,13 +22,16 @@ jobs:
       - name: Cache Frontend Dependencies
         uses: actions/cache@v2
         with:
-          path: ./.npm
+          path: /frontend/.npm
           key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             frontend-node-modules-
 
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache .npm --prefer-offline && exit 0
+
+      - name:  List Frontend Folder
+        run: cd frontend && ls
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
