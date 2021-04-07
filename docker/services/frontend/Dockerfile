@@ -8,4 +8,4 @@ RUN npm config set update-notifier false --no-update-notifier \
 
 WORKDIR /app
 
-CMD [ "bash", "/scripts/frontend/serve.sh", "&" ]
+CMD [ "bash", "/scripts/frontend/entrypoint.sh", "&" ]

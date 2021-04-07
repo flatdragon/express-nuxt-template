@@ -5,12 +5,8 @@ if [ "$ENV" = "development" ]; then
   npm run dev
 fi
 
-if [ "$ENV" = "test" ]; then
-  npm ci
-  npm run test
+if [ "$ENV" = "pipeline" ]; then
+  tail -f /dev/null
 fi
 
-# npm ci
-# npm run build
-# npm run start
-# exit
+/scripts/wrong-env.sh

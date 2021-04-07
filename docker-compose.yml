@@ -7,7 +7,7 @@ services:
       context: ./docker/services/frontend
     # restart: unless-stopped
     environment:
-      ENV: ${ENV:-test}
+      ENV: ${ENV}
       HOST: ${FRONTEND_INTERNAL_HOST:-0.0.0.0}
       PORT: ${FRONTEND_INTERNAL_PORT:-3000}
     ports:

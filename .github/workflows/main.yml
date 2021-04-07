@@ -15,5 +15,14 @@ jobs:
       - name: Build Frontend Container
         run: docker-compose build frontend
 
+      - name: Up Frontend Container 
+        run: docker-compose up --exit-code-from frontend
+
+      - name: Install Frontend Dependencies
+        run: ./exec frontend_1 npm ci
+
+      - name: Run Frontend Tests
+        run: ./exec frontend_1 npm run test --if-present
+
       - name: Up Frontend Container & Run Tests
         run: docker-compose up --exit-code-from frontend
