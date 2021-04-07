@@ -27,11 +27,14 @@ jobs:
           restore-keys: |
             frontend-node-modules-
 
+      - name:  List Frontend Before
+        run: docker-compose run frontend cd npm_cache && ls
+
       - name: Install Frontend Dependencies
         run: docker-compose run frontend npm ci --cache npm_cache --prefer-offline && exit 0
 
       - name:  Check If Cache Folder Exists After
-        run: docker-compose run frontend bash && cd npm_cache && ls
+        run: docker-compose run frontend cd npm_cache && ls
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
