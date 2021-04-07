@@ -22,16 +22,16 @@ jobs:
       - name: Cache Frontend Dependencies
         uses: actions/cache@v2
         with:
-          path: /frontend/.npm
+          path: /frontend/npm_cache
           key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             frontend-node-modules-
 
       - name: Install Frontend Dependencies
-        run: docker-compose run frontend npm ci --cache .npm --prefer-offline && exit 0
+        run: docker-compose run frontend npm ci --cache npm_cache --prefer-offline && exit 0
 
-      - name:  Check If Cache Folder Exists
-        run: docker-compose run frontend bash && cd .npm && ls
+      - name:  Check If Cache Folder Exists After
+        run: docker-compose run frontend bash && cd npm_cache && ls
 
       - name: Lint Frontend
         run: docker-compose run frontend npm run lint --if-preset && exit 0
