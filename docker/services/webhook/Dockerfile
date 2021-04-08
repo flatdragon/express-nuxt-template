@@ -9,4 +9,4 @@ RUN npm config set update-notifier false --no-update-notifier \
 
 WORKDIR /app
 
-CMD [ "node", "index.js" ]
+CMD [ "npm", "run", "start" ]

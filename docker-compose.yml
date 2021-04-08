@@ -15,18 +15,18 @@ services:
       - ./frontend:/app
       - ./docker/scripts:/scripts
 
-  webhooker:
+  webhook:
     build:
-      context: ./docker/services/webhooker
+      context: ./docker/services/webhook
     environment:
-      DEPLOY_WEBHOOK_SECRET: ${DEPLOY_WEBHOOK_SECRET}
+      DEPLOY_WEBHOOK_SECRET: ${WEBHOOK_SECRET}
     ports:
       - 4000:4000
     volumes:
-      - ./webhooker:/app
+      - ./webhook:/app
       - ./docker/scripts:/scripts
 
   tunnel:
     build:
       context: ./docker/services/tunnel
-    command: lt --subdomain flatdragon-webhooker --local-host webhooker --port 4000
+    command: lt --subdomain flatdragon-webhook --local-host webhook --port 4000
