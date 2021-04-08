@@ -41,7 +41,12 @@ app.post('/', (req, res) => {
     console.log('Invalid signature. Aborting...\n')
     res.status(403).send()
   } else {
-    console.log('Valid signature. Init project syncing...\n')
+    if (process.env.ENV === 'production') {
+      console.log('Valid signature. Init project syncing...\n')
+      exec('cd .. && bash sync.sh')
+    } else {
+      console.log('Valid signature. Finishing...\n')
+    }
     res.status(200).send()
   }
 })
