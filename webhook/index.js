@@ -3,7 +3,7 @@ const http = require('http')
 const crypto = require('crypto')
 const express = require('express')
 const bodyParser = require('body-parser')
-const execute = require('./execute')
+const fs = require('fs')
 
 const app = express()
 
@@ -43,13 +43,7 @@ app.post('/', async (req, res) => {
   } else {
     if (process.env.ENV === 'production') {
       console.log('Valid signature. Init project syncing...\n')
-      try {
-        const output = await execute('cd /project && bash sync.sh')
-
-        console.log(output);
-      } catch (error) {
-        console.error(error.toString())
-      }
+      fs.writeFileSync('syncing', '')
     } else {
       console.log('Valid signature. Finishing...\n')
     }
