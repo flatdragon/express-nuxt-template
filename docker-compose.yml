@@ -20,6 +20,7 @@ services:
       context: ./docker/services/webhook
     environment:
       ENV: ${ENV}
+      PORT: ${WEBHOOK_PORT:-4000}
       WEBHOOK_SECRET: ${WEBHOOK_SECRET}
     ports:
       - ${WEBHOOK_PORT:-4000}:${WEBHOOK_PORT:-4000}
