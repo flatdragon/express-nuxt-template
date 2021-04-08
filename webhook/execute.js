@@ -4,7 +4,7 @@ function execute(command) {
   return new Promise((resolve, reject) => {
     exec(command, (error, standardOutput, standardError) => {
       if (error) {
-        reject()
+        reject(error)
         return
       }
 

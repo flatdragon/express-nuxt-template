@@ -44,11 +44,11 @@ app.post('/', async (req, res) => {
     if (process.env.ENV === 'production') {
       console.log('Valid signature. Init project syncing...\n')
       try {
-        const commandOutput = await execute('cd .. && bash sync.sh')
+        const output = await execute('cd .. && bash sync.sh')
 
-        console.log(commandOutput);
+        console.log(output);
       } catch (error) {
-        console.error(error)
+        console.error(error.toString())
       }
     } else {
       console.log('Valid signature. Finishing...\n')
