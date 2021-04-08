@@ -18,4 +18,4 @@ function execute(command) {
   })
 }
 
-export default execute
+module.exports = execute
