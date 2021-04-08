@@ -14,7 +14,20 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  console.log(`\n---------- Incoming Webhook Call at ${Date.now()} ----------\n`)
+  const timeZone = 'UTC'
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false,
+    timeZone,
+  }
+
+  console.log(`\n---------- Incoming Webhook Call at ${(new Date()).toLocaleString('en', options)} (${timeZone}) ----------\n`)
   console.log('Verifiying signature...')
 
   const githubSignature = req.headers['x-hub-signature']
