@@ -48,7 +48,7 @@ app.post('/', async (req, res) => {
 
         console.log(commandOutput);
       } catch (error) {
-        console.error(error.toString())
+        console.error(error)
       }
     } else {
       console.log('Valid signature. Finishing...\n')
