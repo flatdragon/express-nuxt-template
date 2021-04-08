@@ -1,6 +1,6 @@
 FROM node:15.13-alpine3.13
 
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash git
 
 RUN npm config set update-notifier false --no-update-notifier \
   && npm config set unsafe-perm true \
