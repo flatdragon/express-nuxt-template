@@ -22,7 +22,7 @@ services:
       ENV: ${ENV}
       WEBHOOK_SECRET: ${WEBHOOK_SECRET}
     ports:
-      - 4000:4000
+      - ${WEBHOOK_PORT:-4000}:${WEBHOOK_PORT:-4000}
     volumes:
       - ./webhook:/app
       - ./docker/scripts:/scripts
@@ -30,4 +30,4 @@ services:
   tunnel:
     build:
       context: ./docker/services/tunnel
-    command: lt --subdomain flatdragon-webhook --local-host webhook --port 4000
+    command: lt --subdomain flatdragon-webhook --local-host webhook --port ${WEBHOOK_PORT:-4000}
