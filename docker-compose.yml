@@ -26,6 +26,7 @@ services:
       - ${WEBHOOK_PORT:-4000}:${WEBHOOK_PORT:-4000}
     volumes:
       - ./webhook:/app
+      - ./:/project
       - ./docker/scripts:/scripts
 
   tunnel:
