@@ -5,7 +5,8 @@ RUN apk add --no-cache bash
 RUN npm config set update-notifier false --no-update-notifier \
   && npm config set unsafe-perm true \
   && npm config set fund false \
-  && npm config set cache /app/.npm
+  && npm config set cache /app/.npm \
+  && npm install -g nodemon
 
 WORKDIR /app
 
