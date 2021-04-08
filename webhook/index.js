@@ -44,7 +44,7 @@ app.post('/', async (req, res) => {
     if (process.env.ENV === 'production') {
       console.log('Valid signature. Init project syncing...\n')
       try {
-        const output = await execute('cd /project && ls && bash sync.sh')
+        const output = await execute('cd /project && bash sync.sh')
 
         console.log(output);
       } catch (error) {
