@@ -3,7 +3,7 @@ const http = require('http')
 const crypto = require('crypto')
 const express = require('express')
 const bodyParser = require('body-parser')
-const { exec } = require('child_process')
+const execute = require('./execute')
 
 const app = express()
 
@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   res.status(200).send('Webhook is running...\n')
 })
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
   const timeZone = 'UTC'
 
   const options = {
@@ -43,7 +43,13 @@ app.post('/', (req, res) => {
   } else {
     if (process.env.ENV === 'production') {
       console.log('Valid signature. Init project syncing...\n')
-      exec('cd .. && bash sync.sh')
+      try {
+        const commandOutput = await execute('cd .. && bash sync.sh')
+
+        console.log(commandOutput);
+      } catch (error) {
+        console.error(error.toString())
+      }
     } else {
       console.log('Valid signature. Finishing...\n')
     }
