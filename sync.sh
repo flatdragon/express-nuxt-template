@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-git pull
+git pull --ff-only
