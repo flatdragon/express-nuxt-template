@@ -2,17 +2,18 @@ const ip = require('ip')
 const http = require('http')
 const crypto = require('crypto')
 const express = require('express')
+const bodyParser = require('body-parser')
 const { exec } = require('child_process')
 
 const app = express()
+
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
   res.status(200).send('Webhook is running...\n')
 })
 
 app.post('/', (req, res) => {
-  console.log('check')
-
   const githubSignature = req.headers['x-hub-signature']
   const calculatedSignature = 'sha1=' + crypto.createHmac('sha1', process.env.WEBHOOK_SECRET).update(JSON.stringify(req.body), 'utf-8').digest('hex')
 
