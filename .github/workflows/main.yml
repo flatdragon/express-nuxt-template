@@ -42,8 +42,8 @@ jobs:
 
   frontend-integration:
     name: Frontend Integration
-    needs:
-      # - api-integration
+    # needs:
+    #   - api-integration
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Main Branch
