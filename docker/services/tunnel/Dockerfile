@@ -5,5 +5,3 @@ RUN npm config set update-notifier false --no-update-notifier \
   && npm config set fund false \
   && npm config set cache /app/.npm \
   && npm install -g localtunnel
-
-# CMD [ "tail", "-f", "/dev/null" ]
