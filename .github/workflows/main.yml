@@ -7,7 +7,7 @@ on:
 
 env:
   ENV: pipeline
-  WORKDIR: ${PWD##*/}
+  WORKDIR: ${${PWD##*/}}
   # FRONTEND_NODE_MODULES_PATH: /app/node_modules.dummy
   # FRONTEND_NUXT_PATH: /app/.nuxt.dummy
   # WEBHOOK_NODE_MODULES_PATH: /app/node_modules.dummy
