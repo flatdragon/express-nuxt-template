@@ -36,7 +36,7 @@ services:
       replicas: ${FRONTEND_REPLICAS:-1}
     volumes:
       - ./frontend:/app
-      - ${FRONTEND_NODE_MODULES_PATH:/app/node_modules}
+      - ${FRONTEND_NODE_MODULES_PATH:-/app/node_modules}
       - ${FRONTEND_NUXT_PATH:/app/.nuxt}
       - ./docker/scripts:/scripts
     profiles:
@@ -59,7 +59,7 @@ services:
       - traefik.http.routers.webhook.entrypoints=http
     volumes:
       - ./webhook:/app
-      - ${WEBHOOK_NODE_MODULES_PATH:/app/node_modules}
+      - ${WEBHOOK_NODE_MODULES_PATH:-/app/node_modules}
       - ./docker/scripts:/scripts
     profiles:
       - production
