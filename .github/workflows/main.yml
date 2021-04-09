@@ -7,46 +7,43 @@ on:
 
 env:
   ENV: pipeline
-  # FRONTEND_NODE_MODULES_PATH: /app/node_modules.dummy
-  # FRONTEND_NUXT_PATH: /app/.nuxt.dummy
-  # WEBHOOK_NODE_MODULES_PATH: /app/node_modules.dummy
 
 jobs:
 
-  api-integration:
-    name: Backend Integration
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout Main Branch
-        uses: actions/checkout@v2
+  # api-integration:
+  #   name: Backend Integration
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout Main Branch
+  #       uses: actions/checkout@v2
 
-      - name: Build API Container
-        run: docker-compose build api
+  #     - name: Build API Container
+  #       run: docker-compose build api
 
-      - name: Cache API Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./api/.npm
-          key: api-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            api-node-modules-
+  #     - name: Cache API Dependencies
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ./api/.npm
+  #         key: api-node-modules-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           api-node-modules-
 
-      - name: Up API Container
-        run: docker-compose up --detach api
+  #     - name: Up API Container
+  #       run: docker-compose up --detach api
 
-      - name: Install API Dependencies
-        run: docker exec ${PWD##*/}_api_1 sh -c 'npm ci --prefer-offline; exit $?'
+  #     - name: Install API Dependencies
+  #       run: docker exec ${PWD##*/}_api_1 sh -c 'npm ci --prefer-offline; exit $?'
 
-      - name: Lint API
-        run: docker exec ${PWD##*/}_api_1 sh -c 'npm run lint --if-preset; exit $?'
+  #     - name: Lint API
+  #       run: docker exec ${PWD##*/}_api_1 sh -c 'npm run lint --if-preset; exit $?'
 
-      - name: Test API
-        run: docker exec ${PWD##*/}_api_1 sh -c 'npm run test --if-present; exit $?'
+  #     - name: Test API
+  #       run: docker exec ${PWD##*/}_api_1 sh -c 'npm run test --if-present; exit $?'
 
   frontend-integration:
     name: Frontend Integration
     needs:
-      - api-integration
+      # - api-integration
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Main Branch
@@ -67,19 +64,15 @@ jobs:
         run: docker-compose up --detach frontend
 
       - name: Install Frontend Dependencies
-        # run: docker-compose run frontend npm ci --prefer-offline && exit 0
         run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm ci --prefer-offline; exit $?'
 
       - name: Lint Frontend
-        # run: docker-compose run frontend npm run lint --if-preset && exit 0
         run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run lint --if-preset; exit $?'
 
       - name: Test Frontend
-        # run: docker-compose run frontend npm run test --if-present && exit 0
         run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run test --if-present; exit $?'
 
       - name: Build Frontend
-        # run: docker-compose run frontend npm run build && exit 0
         run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run build; exit $?'
 
   # deploy:
