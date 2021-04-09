@@ -56,9 +56,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./frontend/.npm
-          key: frontend-node-${{ hashFiles('**/package-lock.json') }}
+          key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            frontend-node-
+            frontend-node-modules-
 
       - name: Up Frontend Container
         run: docker-compose up --detach frontend

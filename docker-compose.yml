@@ -43,7 +43,6 @@ services:
       context: ./docker/services/frontend
     environment:
       ENV: ${ENV}
-      NODE_ENV: ${ENV}
       HOST: ${FRONTEND_HOST:-0.0.0.0}
       PORT: ${FRONTEND_PORT:-3000}
       CHOKIDAR_USEPOLLING: 1
