@@ -76,13 +76,13 @@ jobs:
 
   deploy:
     name: Deploy Project
-    if: contains(env.WEBHOOK_ENABLED, 'true')
     needs:
       - api-integration
       - frontend-integration
     runs-on: ubuntu-20.04
     steps:
       - name: Trigger Deploy Webhook
+        if: ${{ contains(env.WEBHOOK_ENABLED, 'true') }}
         uses: distributhor/workflow-webhook@v1
         env:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
