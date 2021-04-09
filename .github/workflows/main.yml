@@ -7,6 +7,10 @@ on:
 
 env:
   ENV: pipeline
+  WORKDIR: ${PWD##*/}
+  # FRONTEND_NODE_MODULES_PATH: /app/node_modules.dummy
+  # FRONTEND_NUXT_PATH: /app/.nuxt.dummy
+  # WEBHOOK_NODE_MODULES_PATH: /app/node_modules.dummy
 
 jobs:
 
@@ -28,17 +32,24 @@ jobs:
           restore-keys: |
             frontend-node-modules-
 
+      - name: Up Frontend Container
+        run: docker-compose up --detach frontend
+
       - name: Install Frontend Dependencies
-        run: docker-compose run frontend npm ci --prefer-offline && exit 0
+        # run: docker-compose run frontend npm ci --prefer-offline && exit 0
+        run: docker exec ${WORKDIR}_frontend_1 sh -c 'npm ci --prefer-offline; exit $?'
 
       - name: Lint Frontend
-        run: docker-compose run frontend npm run lint --if-preset && exit 0
+        # run: docker-compose run frontend npm run lint --if-preset && exit 0
+        run: docker exec ${WORKDIR}_frontend_1 sh -c 'npm run lint --if-preset; exit $?'
 
       - name: Test Frontend
-        run: docker-compose run frontend npm run test --if-present && exit 0
+        # run: docker-compose run frontend npm run test --if-present && exit 0
+        run: docker exec ${WORKDIR}_frontend_1 sh -c 'npm run test --if-present; exit $?'
 
       - name: Build Frontend
-        run: docker-compose run frontend npm run build && exit 0
+        # run: docker-compose run frontend npm run build && exit 0
+        run: docker exec ${WORKDIR}_frontend_1 sh -c 'npm run build; exit $?'
 
   # deploy:
   #   name: Deploy Project

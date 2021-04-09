@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-bash watch.sh >> watch.log 2>&1 &
+git pull --ff-only
+
+docker-compose --profile production up --detach --build --force-recreate

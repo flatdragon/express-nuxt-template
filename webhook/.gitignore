@@ -88,3 +88,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Dummy path for docker-compose
+*.dummy
