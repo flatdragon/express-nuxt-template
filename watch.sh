@@ -2,7 +2,7 @@
 
 while true; do
   if [ -e ./webhook/syncing ]; then
-    bash sync-project.sh >> sync-project.log 2>&1
+    bash sync.sh >> sync.log 2>&1
     rm -f ./webhook/syncing
   fi
   sleep 10

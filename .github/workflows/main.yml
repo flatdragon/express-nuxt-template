@@ -9,6 +9,7 @@ env:
   ENV: pipeline
 
 jobs:
+
   integration:
     name: Frontend Integration
     runs-on: ubuntu-20.04
@@ -39,13 +40,13 @@ jobs:
       - name: Build Frontend
         run: docker-compose run frontend npm run build && exit 0
 
-  deploy:
-    name: Deploy Project
-    needs: integration
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Trigger Deploy Webhook
-        uses: distributhor/workflow-webhook@v1
-        env:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
-          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+  # deploy:
+  #   name: Deploy Project
+  #   needs: integration
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Trigger Deploy Webhook
+  #       uses: distributhor/workflow-webhook@v1
+  #       env:
+  #         webhook_url: ${{ secrets.WEBHOOK_URL }}
+  #         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}

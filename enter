@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-sudo docker exec --interactive --tty ${PWD##*/}_${1}_${2:-1} sh

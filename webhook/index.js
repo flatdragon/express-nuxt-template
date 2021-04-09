@@ -53,7 +53,9 @@ app.post('/', async (req, res) => {
 
 const webhook = http.createServer(app)
 
-const HOST = ip.address()
+const HOST = process.env.HOST ?? '0.0.0.0'
 const PORT = process.env.PORT ?? 4000
 
-webhook.listen(PORT, HOST, () => console.log(`Server running at http://${HOST}:${PORT}`))
+const PRINTABLE_HOST = HOST === '0.0.0.0' ? ip.address() : HOST
+
+webhook.listen(PORT, HOST, () => console.log(`Server running at http://${PRINTABLE_HOST}:${PORT}`))
