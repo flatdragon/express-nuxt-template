@@ -7,6 +7,7 @@ on:
 
 env:
   ENV: pipeline
+  WEBHOOK_ENABLED: ${{ secrets.WEBHOOK_ENABLED }}
 
 jobs:
 
@@ -81,7 +82,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Trigger Deploy Webhook
-        if: ${{ contains(${{ secrets.WEBHOOK_ENABLED }}, 'true') }}
+        if: ${{ contains(WEBHOOK_ENABLED, 'true') }}
         uses: distributhor/workflow-webhook@v1
         env:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
