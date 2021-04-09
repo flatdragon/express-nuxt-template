@@ -76,7 +76,7 @@ jobs:
 
   deploy:
     name: Deploy Project
-    if: ${{ contains(secrets.WEBHOOK_ENABLED, 'true') }}
+    if: ${{ contains(WEBHOOK_ENABLED, 'true') }}
     needs:
       - api-integration
       - frontend-integration
