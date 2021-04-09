@@ -37,7 +37,7 @@ services:
     volumes:
       - ./frontend:/app
       - ${FRONTEND_NODE_MODULES_PATH:-/app/node_modules}
-      - ${FRONTEND_NUXT_PATH:/app/.nuxt}
+      - ${FRONTEND_NUXT_PATH:-/app/.nuxt}
       - ./docker/scripts:/scripts
     profiles:
       - production
