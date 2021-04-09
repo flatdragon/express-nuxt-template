@@ -1,6 +1,6 @@
 export default {
   env: {
-    hostname: process.env.HOSTNAME
+    hostname: process.env.HOSTNAME,
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
