@@ -42,8 +42,6 @@ jobs:
 
   frontend-integration:
     name: Frontend Integration
-    needs:
-      - api-integration
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Main Branch
@@ -75,13 +73,16 @@ jobs:
       - name: Build Frontend
         run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run build; exit $?'
 
-  # deploy:
-  #   name: Deploy Project
-  #   needs: integration
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: Trigger Deploy Webhook
-  #       uses: distributhor/workflow-webhook@v1
-  #       env:
-  #         webhook_url: ${{ secrets.WEBHOOK_URL }}
-  #         webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+  deploy:
+    name: Deploy Project
+    needs:
+      - api-integration
+      - frontend-integration
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Trigger Deploy Webhook
+        if: ${{ contains(secrets.WEBHOOK_ENABLED, 'true') }}
+        uses: distributhor/workflow-webhook@v1
+        env:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
