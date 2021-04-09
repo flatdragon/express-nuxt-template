@@ -1,0 +1,79 @@
+name: Development Workflow
+
+on:
+  push:
+    branches:
+      - '!main'
+  pull_request:
+    branches:
+      - main
+
+env:
+  ENV: pipeline
+
+jobs:
+
+  api-integration:
+    name: API Integration
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Main Branch
+        uses: actions/checkout@v2
+
+      - name: Build API Container
+        run: docker-compose build api
+
+      - name: Cache API Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./api/.npm
+          key: api-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            api-node-modules-
+
+      - name: Up API Container
+        run: docker-compose up --detach api
+
+      - name: Install API Dependencies
+        run: docker exec ${PWD##*/}_api_1 sh -c 'npm ci --prefer-offline; exit $?'
+
+      - name: Lint API
+        run: docker exec ${PWD##*/}_api_1 sh -c 'npm run lint --if-preset; exit $?'
+
+      - name: Test API
+        run: docker exec ${PWD##*/}_api_1 sh -c 'npm run test --if-present; exit $?'
+
+  frontend-integration:
+    name: Frontend Integration
+    needs:
+      - api-integration
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Main Branch
+        uses: actions/checkout@v2
+
+      - name: Build Frontend Container
+        run: docker-compose build frontend
+
+      - name: Cache Frontend Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./frontend/.npm
+          key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            frontend-node-modules-
+
+      - name: Up Frontend Container
+        run: docker-compose up --detach frontend
+
+      - name: Install Frontend Dependencies
+        run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm ci --prefer-offline; exit $?'
+
+      - name: Lint Frontend
+        run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run lint --if-preset; exit $?'
+
+      - name: Test Frontend
+        run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run test --if-present; exit $?'
+
+      - name: Build Frontend
+        run: docker exec ${PWD##*/}_frontend_1 sh -c 'npm run build; exit $?'

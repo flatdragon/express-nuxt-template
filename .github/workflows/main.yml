@@ -11,7 +11,7 @@ env:
 jobs:
 
   api-integration:
-    name: Backend Integration
+    name: API Integration
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Main Branch
