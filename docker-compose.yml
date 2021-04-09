@@ -27,8 +27,6 @@ services:
       PORT: ${API_PORT:-2000}
     ports:
       - ${API_PORT:-2000}
-    deploy:
-      replicas: ${API_REPLICAS:-1}
     volumes:
       - ./api:/app
       - /app/node_modules
