@@ -18,25 +18,25 @@ services:
       - production
       - development
 
-    frontend:
-      build:
-        context: ./docker/services/api
-      environment:
-        ENV: ${ENV}
-        NODE_ENV: ${ENV}
-        HOST: ${API_HOST:-0.0.0.0}
-        PORT: ${API_PORT:-2000}
-        ports:
-          - ${API_PORT:-2000}
-      deploy:
-        replicas: ${API_REPLICAS:-1}
-      volumes:
-        - ./api:/app
-        - /app/node_modules
-        - ./docker/scripts:/scripts
-      profiles:
-        - production
-        - development
+  api:
+    build:
+      context: ./docker/services/api
+    environment:
+      ENV: ${ENV}
+      NODE_ENV: ${ENV}
+      HOST: ${API_HOST:-0.0.0.0}
+      PORT: ${API_PORT:-2000}
+      ports:
+        - ${API_PORT:-2000}
+    deploy:
+      replicas: ${API_REPLICAS:-1}
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+      - ./docker/scripts:/scripts
+    profiles:
+      - production
+      - development
 
   frontend:
     build:
