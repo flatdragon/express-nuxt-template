@@ -30,7 +30,7 @@ services:
       - ${FRONTEND_PORT:-3000}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`${FRONTEND_VIRTUAL_HOST}`)
+      - traefik.http.routers.frontend.rule=Host(`${FRONTEND_VIRTUAL_HOST:-localhost}`)
       - traefik.http.routers.frontend.entrypoints=http
     deploy:
       replicas: ${FRONTEND_REPLICAS:-1}
@@ -55,7 +55,7 @@ services:
       - ${WEBHOOK_PORT:-4000}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.webhook.rule=Host(`${WEBHOOK_VIRTUAL_HOST}`)
+      - traefik.http.routers.webhook.rule=Host(`${WEBHOOK_VIRTUAL_HOST:webhook.localhost}`)
       - traefik.http.routers.webhook.entrypoints=http
     volumes:
       - ./webhook:/app
