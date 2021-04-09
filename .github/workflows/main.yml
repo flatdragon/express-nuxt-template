@@ -52,13 +52,13 @@ jobs:
       - name: Build Frontend Container
         run: docker-compose build frontend
 
-      - name: Cache Frontend Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./frontend/.npm
-          key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            frontend-node-modules-
+      # - name: Cache Frontend Dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ./frontend/.npm
+      #     key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       frontend-node-modules-
 
       - name: Up Frontend Container
         run: docker-compose up --detach frontend
