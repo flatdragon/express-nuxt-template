@@ -4,15 +4,25 @@ services:
 
   proxy:
     image: traefik
-    command:
-      - --api.insecure=false
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.http.address=:80
+    command: |
+      --api.insecure=${TRAEFIK_API_INSECURE:-false} 
+      --providers.docker=true
+      --providers.docker.exposedbydefault=false
+      --entrypoints.web.address=:80
+      --entrypoints.web.http.redirections.entrypoint.to=secured-web
+      --entrypoints.web.http.redirections.entrypoint.scheme=https
+      --entrypoints.web.http.redirections.entrypoint.permanent=${REDIRECT_TO_HTTPS:-false}
+      --entrypoints.secured-web.address=:443
+      --certificatesresolvers.webresolver.acme.httpchallenge=${TLS_ENABLED:-false}
+      --certificatesresolvers.webresolver.acme.httpchallenge.entrypoint=web
+      --certificatesresolvers.webresolver.acme.email=${ACME_EMAIL}
+      --certificatesresolvers.webresolver.acme.storage=/letsencrypt/acme.json
     ports:
       - 80:80
+      - 443:443
       - 8080:8080
     volumes:
+      - ./letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     profiles:
       - production
@@ -48,7 +58,11 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.frontend.rule=Host(`${FRONTEND_VIRTUAL_HOST:-localhost}`)
-      - traefik.http.routers.frontend.entrypoints=http
+      - traefik.http.routers.frontend.entrypoints=web
+      - traefik.http.routers.frontend-secured.rule=Host(`${FRONTEND_VIRTUAL_HOST:-localhost}`)
+      - traefik.http.routers.frontend-secured.entrypoints=secured-web
+      - traefik.http.routers.frontend-secured.tls=${TLS_ENABLED:-false}
+      - traefik.http.routers.frontend-secured.tls.certresolver=webresolver
     deploy:
       replicas: ${FRONTEND_REPLICAS:-1}
     volumes:
@@ -71,9 +85,12 @@ services:
     ports:
       - ${WEBHOOK_PORT:-4000}
     labels:
-      - traefik.enable=true
       - traefik.http.routers.webhook.rule=Host(`${WEBHOOK_VIRTUAL_HOST:-webhook.localhost}`)
-      - traefik.http.routers.webhook.entrypoints=http
+      - traefik.http.routers.webhook.entrypoints=web
+      - traefik.http.routers.webhook-secured.rule=Host(`${WEBHOOK_VIRTUAL_HOST:-webhook.localhost}`)
+      - traefik.http.routers.webhook-secured.entrypoints=secured-web
+      - traefik.http.routers.webhook-secured.tls=${TLS_ENABLED:-false}
+      - traefik.http.routers.webhook-secured.tls.certresolver=webresolver
     volumes:
       - ./webhook:/app
       - /app/node_modules
