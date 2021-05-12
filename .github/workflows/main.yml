@@ -21,14 +21,6 @@ jobs:
       - name: Build API Container
         run: docker-compose build api
 
-      - name: Cache API Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./api/.npm
-          key: api-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            api-node-modules-
-
       - name: Up API Container
         run: docker-compose up --detach api
 
@@ -50,14 +42,6 @@ jobs:
 
       - name: Build Frontend Container
         run: docker-compose build frontend
-
-      - name: Cache Frontend Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ./frontend/.npm
-          key: frontend-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            frontend-node-modules-
 
       - name: Up Frontend Container
         run: docker-compose up --detach frontend
