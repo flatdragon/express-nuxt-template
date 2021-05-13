@@ -3,6 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">Express Nuxt Template</h1>
+      <h2 class="subtitle">Amount of Visits: {{ visits }}</h2>
       <h2 class="subtitle">Docker Container Hash: {{ hostname }}</h2>
       <div class="links">
         <a
@@ -28,10 +29,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      visits: 0,
+    }
+  },
   computed: {
     hostname() {
       return process.env.hostname
     },
+  },
+  async mounted() {
+    this.visits = await this.$axios.$get('/visits')
   },
 }
 </script>

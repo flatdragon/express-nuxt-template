@@ -28,6 +28,10 @@ services:
       PORT: ${API_PORT:-2000}
     ports:
       - ${API_PORT:-2000}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`${API_VIRTUAL_HOST:-api.localhost}`)
+      - traefik.http.routers.api.entrypoints=web
     volumes:
       - ./api:/app
       - /app/node_modules
@@ -43,6 +47,7 @@ services:
       ENV: ${ENV}
       HOST: ${FRONTEND_HOST:-0.0.0.0}
       PORT: ${FRONTEND_PORT:-3000}
+      VIRTUAL_HOST: ${FRONTEND_VIRTUAL_HOST}
       CHOKIDAR_USEPOLLING: 1
     ports:
       - ${FRONTEND_PORT:-3000}
@@ -79,6 +84,17 @@ services:
       - ./webhook:/app
       - /app/node_modules
       - ./docker/scripts:/scripts
+    profiles:
+      - production
+      - development
+
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - ${MONGO_DATA_LOCAL_PATH:-./data/mongodb/db}:/data/db
     profiles:
       - production
       - development
