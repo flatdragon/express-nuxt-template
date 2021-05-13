@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">Express Nuxt Template Webhook 2</h1>
+      <h1 class="title">Express Nuxt Template Webhook 3</h1>
       <h2 class="subtitle">Amount of Visits: {{ visits }}</h2>
       <h2 class="subtitle">Docker Container Hash: {{ hostname }}</h2>
       <div class="links">
