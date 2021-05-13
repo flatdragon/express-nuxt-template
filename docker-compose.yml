@@ -4,6 +4,7 @@ services:
 
   proxy:
     image: traefik
+    restart: unless-stopped
     command: |
       --api.insecure=${TRAEFIK_API_INSECURE:-false} 
       --providers.docker=true
@@ -22,6 +23,7 @@ services:
   api:
     build:
       context: ./docker/services/api
+    restart: unless-stopped
     environment:
       ENV: ${ENV}
       HOST: ${API_HOST:-0.0.0.0}
@@ -43,6 +45,7 @@ services:
   frontend:
     build:
       context: ./docker/services/frontend
+    restart: unless-stopped
     environment:
       ENV: ${ENV}
       HOST: ${FRONTEND_HOST:-0.0.0.0}
@@ -69,6 +72,7 @@ services:
   webhook:
     build:
       context: ./docker/services/webhook
+    restart: unless-stopped
     environment:
       ENV: ${ENV}
       HOST: ${WEBHOOK_HOST:-0.0.0.0}
