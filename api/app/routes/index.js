@@ -10,8 +10,16 @@ router.get('/', (req, res) => {
 })
 
 router.get('/visits', async (req, res) => {
-  let visits = await Metric.findOne({ name: 'visits' }).lean() ?? { value: 0 }
-  await Metric.updateOne({ name: 'visits' }, { value: ++visits.value }, { upsert: true }).exec()
+  const visits = (await Metric.findOne({ name: 'visits' }).lean()) ?? {
+    value: 0,
+  }
+
+  await Metric.updateOne(
+    { name: 'visits' },
+    { value: ++visits.value },
+    { upsert: true }
+  ).exec()
+
   res.status(200).send(String(visits.value))
 })
 
